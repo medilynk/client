@@ -1,2 +1,3 @@
 # client
-medilynk frontend
+medilynk frontend.
+Tech - React
