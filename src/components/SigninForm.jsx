@@ -1,9 +1,12 @@
 
 
-    import React, { useState } from 'react';
+    import React, { useState, useEffect } from 'react';
     import { useAuthContext } from '../hooks/useAuthContext';
     import { useLogin } from '../hooks/useLogin';
+
     const SigninForm = () => {
+
+
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const [role, setRole] = useState('');
@@ -25,7 +28,10 @@
         const handleSubmit =async (e) => {
             e.preventDefault();
             await login(email, password,role);
+            
         };
+
+      
 
         return (
             <form onSubmit={handleSubmit} className="flex flex-col items-center">
