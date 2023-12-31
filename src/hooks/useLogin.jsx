@@ -19,7 +19,8 @@ export const useLogin = () =>{
             'password' : password,
         }
 
-        const response = await fetch(`https://medilynk.clasher.ovh/auth/login/${type}`,{
+        const base_url = import.meta.env.VITE_BASE_URL
+        const response = await fetch(`${base_url}/auth/login/${type}`,{
             method: 'POST',
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify(data)
