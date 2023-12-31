@@ -14,8 +14,9 @@ const Navbar = () => {
         logout(); // Call the handleLogout function
     }
     return (
-        <nav className='w-full flex justify-between items-center bg-emerald-600 py-4 px-8'>
-            <Link to='/' className="logo text-2xl font-bold">
+        <nav className='w-full flex justify-between items-center bg-teal-600 py-4 px-8'>
+            <Link to='/' className="logo text-2xl text-white font-bold">
+                <img src='/logo.png' alt='logo' className='w-8 h-8 inline-block mr-2' />
                 Medilynk
             </Link>
             <div className="buttons flex gap-4">
