@@ -1,12 +1,16 @@
-import { useState } from 'react'
 
+import { useAuthContext } from './hooks/useAuthContext'
+import { useLogout } from './hooks/useLogout'
 
 function App() {
- 
+  const {logout} = useLogout()
+  const {user} = useAuthContext()
+function handleClick(){
+  logout()}
 
   return (
     <>
-      <h1 className='text-2xl text-red-600'>Hello World !</h1>
+     <button onClick={handleClick} className='bg-red-400 p-2 rounded'>logout</button>
     </>
   )
 }
