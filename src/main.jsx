@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { AuthContextProvider } from './context/AuthContext.jsx'
-import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
-import SigninForm from './components/SigninForm.jsx'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Layout from './Layout.jsx'
+import Landing from './pages/Landing.jsx'
+import Doctor from './pages/Doctor.jsx'
+import Admin from './pages/Admin.jsx'
 
 const routes = [
   {
@@ -14,8 +16,17 @@ const routes = [
     children: [
       {
         path: '',
-        element: <SigninForm/>,
-      }
+        element: <Landing/>,
+      },
+      {
+        path: 'admin',
+        element: <Admin/>
+      },
+      {
+        path: 'doctor',
+        element: <Doctor/>,
+      },
+      
     ],
   },
 ];
