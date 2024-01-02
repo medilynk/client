@@ -4,10 +4,10 @@ import Cookies from 'universal-cookie';
 const useAddShift = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-
+    const [shiftdata, setshiftData] = useState({}); 
     const addShift = async (day, startTime, endTime) => {
         const data = {
-            day,
+            day : day,
             start_time: startTime,
             end_time: endTime
         };
@@ -17,6 +17,7 @@ const useAddShift = () => {
             const cookies = new Cookies();
             const token = cookies.get('token');
             const base_url = import.meta.env.VITE_BASE_URL;
+            console.log(data);
             const response = await fetch(`${base_url}/admin/shift/add`, {
                 method: 'POST',
                 headers: {
@@ -38,8 +39,34 @@ const useAddShift = () => {
             setLoading(false);
         }
     };
+const getShifts = async () => {
+        try {
+            setLoading(true);
+            const cookies = new Cookies();
+            const token = cookies.get('token');
+            const base_url = import.meta.env.VITE_BASE_URL;
+            const response = await fetch(`${base_url}/admin/shifts`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-    return { addShift, loading, error };
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                setError('Failed to fetch data');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+    return { addShift, getShifts, shiftdata, loading, error };
 };
 
 export default useAddShift;

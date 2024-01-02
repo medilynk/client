@@ -1,6 +1,5 @@
-import Cookies from "universal-cookie"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MySidebar from '../components/MySidebar';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
@@ -10,15 +9,26 @@ import useAddShift from "../hooks/useAddShift";
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const labelClass = 'block text-gray-700 text-sm font-bold mb-2';
 function Admin() {
-  const [day, setDay] = useState('');
+  const [day, setDay] = useState('Monday');
   const [startTime, setStartTime] = useState('00:00:00');
   const [endTime, setEndTime] = useState('00:00:00');
 
-  const {addShift,loading,error} = useAddShift();
+  const {addShift, getShifts,loading,error, shiftdata} = useAddShift();
   const handleFormSubmit = (event) => {
     event.preventDefault();
     addShift(day, startTime, endTime);
   };
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getShifts();
+      console.log(data);
+    };
+  
+    fetchData();
+  }, []);
+  
 
   return (
     <div className='flex'>
