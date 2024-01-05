@@ -8,7 +8,7 @@ const CreateStaff = () => {
         first_name: '',
         last_name: '',
         email: '',
-        phone: '', // Change the initial value to 0
+        phone: '', 
         password: ''
     });
 
@@ -18,7 +18,7 @@ const CreateStaff = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addStaff({ ...formData, phone: parseInt(formData.phone) }); // Use parseInt to convert phone to an integer
+        addStaff(formData); 
               
         
     };
@@ -27,7 +27,7 @@ const CreateStaff = () => {
         <div className='route'>
             <h2 className='text-3xl py-4 font-medium'>Create a new staff</h2>
         <form className='flex bg-zinc-100 flex-col justify-center gap-4 shadow-zinc-500 shadow-xl items-start p-4 ' onSubmit={handleSubmit}>
-            <div className='w-full'><AccountCircleIcon className='w-20'/></div>
+            <div className='w-full text-3xl text-center'><AccountCircleIcon style={{ fontSize: '5rem', color: '#525151' }}/></div>
             <label className='w-full'>
                 First Name
                 <input
