@@ -1,44 +1,42 @@
 
 import React, { useEffect, useState } from 'react';
-import MySidebar from '../components/MySidebar';
+import MySidebar from '../../components/MySidebar';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import useAddShift from "../hooks/useAddShift";
+import useAddShift from "../../hooks/admin/shifts/useAddShift";
+import toast from 'react-hot-toast';
+
 
 const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const labelClass = 'block text-gray-700 text-sm font-bold mb-2';
-function Admin() {
+const labelClass = 'block   font-semibold mb-2';
+
+function AddShift() {
   const [day, setDay] = useState('Monday');
   const [startTime, setStartTime] = useState('00:00:00');
   const [endTime, setEndTime] = useState('00:00:00');
 
-  const {addShift, getShifts,loading,error, shiftdata} = useAddShift();
+  const {addShift, loading,error} = useAddShift();
   const handleFormSubmit = (event) => {
     event.preventDefault();
     addShift(day, startTime, endTime);
+    !error && toast.success('Shift added successfully');
+    error && toast.error('Something went wrong');
   };
 
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getShifts();
-      console.log(data);
-    };
-  
-    fetchData();
-  }, []);
   
 
   return (
-    <div className='flex'>
-      <MySidebar />
-      <div>
-      <h1 className='text-4xl'>Welcome Admin</h1>
-      <form className='flex flex-col gap-2' onSubmit={handleFormSubmit}>
-        <label className={labelClass} htmlFor="day">Select a weekday</label>
+    <div className='flex w-full h-screen '>
+      <div className='flex flex-col h-full w-full   justify-center items-center'>
+      <h1 className='text-4xl py-4 font-bold'>Add a new Shift</h1>
+      <form className='flex flex-col gap-4 p-8 bg-zinc-100 shadow-xl  ' onSubmit={handleFormSubmit}>
+        <div>
+        <label className={labelClass} htmlFor="day">Select a Weekday</label>
         <select
           id="day"
+          className="border border-gray-500 focus:outline-none  rounded-md w-full p-2 "
           value={day}
           onChange={(e) => setDay(e.target.value)}
           placeholder="Day"
@@ -49,7 +47,8 @@ function Admin() {
             </option>
           ))}
         </select>
-        <div>
+        </div>
+        <div className='flex items-center gap-4 flex-col lg:flex-row'>
           <label className={labelClass} htmlFor="startTime">Select Start Time</label>
           <TimePicker
             id='startTime'
@@ -59,8 +58,7 @@ function Admin() {
             placeholder="Start Time"
             disableClock={true}
           />
-        </div>
-        <div>
+        
           <label className={labelClass} htmlFor="endTime">Select End Time</label>
           <TimePicker
             id='endTime'
@@ -70,11 +68,11 @@ function Admin() {
             disableClock={true}
           />
         </div>
-        <button disabled={loading} className='bg-blue-600 rounded p-3 text-white' type="submit">Add Shift</button>
+        <button disabled={loading} className='bg-blue-600 block text-xl hover:bg-blue-700 rounded p-3 text-white' type="submit">Add Shift</button>
       </form>
       </div>
     </div>
   );
 }
 
-export default Admin;
+export default AddShift;

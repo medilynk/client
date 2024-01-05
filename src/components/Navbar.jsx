@@ -14,7 +14,8 @@ const Navbar = () => {
         logout(); // Call the handleLogout function
     }
     return (
-        <nav className='w-full flex justify-between items-center bg-teal-700 py-4 px-8'>
+        <div>
+        {!user && <nav className='w-full flex justify-center items-center bg-teal-600 px-24 fixed h-16 top-0 z-0'>
             <Link to='/' className="logo text-2xl text-white font-bold">
                 <img src='/logo.png' alt='logo' className='w-8 h-8 inline-block mr-2' />
                 Medilynk
@@ -23,7 +24,8 @@ const Navbar = () => {
                 {!user && <button className={buttonClasses}>Login</button>}
                 {user && <button onClick={handleLogoutClick} className={buttonClasses}>Logout</button>}
             </div>
-        </nav>
+        </nav>}
+        </div>
     );
 };
 

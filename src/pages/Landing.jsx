@@ -3,7 +3,7 @@ import SigninForm from '../components/SigninForm'
 
 function Landing() {
   return (
-    <div>
+    <div className='pt-20'>
         <h3>Landing Page</h3>
         <SigninForm/>
     </div>
