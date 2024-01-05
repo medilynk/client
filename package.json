@@ -22,6 +22,7 @@
     "react-hot-toast": "^2.4.1",
     "react-pro-sidebar": "^1.1.0-alpha.1",
     "react-router-dom": "^6.21.1",
+    "react-select": "^5.8.0",
     "react-time-picker": "^6.6.0",
     "styled-components": "^5.3.11",
     "universal-cookie": "^6.1.1"

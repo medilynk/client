@@ -2,17 +2,17 @@
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
 import { useAuth } from '../../../context/TokenContext.jsx';
-const useCreateStaff = () => {
+const useCreateDoctor = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { getToken } = useAuth();
-    const addStaff = async (data) => {
+    const createDoctor = async (data) => {
         try {
             setLoading(true);
             const token = getToken();
             const base_url = import.meta.env.VITE_BASE_URL;
             console.log(data);
-            const response = await fetch(`${base_url}/admin/register/staff`, {
+            const response = await fetch(`${base_url}/admin/register/doctor`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,10 +22,10 @@ const useCreateStaff = () => {
             });
 
             if (response.ok) {
-                console.log('Staff added successfully');
+                console.log('Doctor added successfully');
             } else {
                 const errorResponse = await response.json();
-                console.log('Staff not added:', errorResponse.error);
+                console.log('Doctor not added:', errorResponse.error);
                 setError(errorResponse.error);
             }
         } catch (error) {
@@ -36,7 +36,7 @@ const useCreateStaff = () => {
         }
     };
 
-    return { addStaff, loading, error };
+    return { createDoctor, loading, error };
 };
 
-export default useCreateStaff;
+export default useCreateDoctor;
