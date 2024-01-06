@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useGetShift from '../../hooks/admin/shifts/useGetShift';
-import MySidebar from '../../components/MySidebar';
+import MySidebar from '../../components/AdminSidebar';
 import DataTable from 'react-data-table-component';
 import useDeleteShift from '../../hooks/admin/shifts/useDeleteShift';
 import { toast } from 'react-hot-toast';

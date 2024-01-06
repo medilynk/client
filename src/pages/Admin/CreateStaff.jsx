@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import useCreateStaff from '../../hooks/admin/accounts/useCreateStaff'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import toast from 'react-hot-toast';
 const CreateStaff = () => {
     const {addStaff, loading, error} = useCreateStaff();
     const [formData, setFormData] = useState({
@@ -19,7 +20,9 @@ const CreateStaff = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         addStaff(formData); 
-              
+        if(error){
+            toast.error(error);
+        }
         
     };
 

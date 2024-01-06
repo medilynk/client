@@ -1,5 +1,5 @@
 import React from 'react'
-import MySidebar from '../../components/MySidebar'
+import MySidebar from '../../components/AdminSidebar'
 
 function Admin() {
   return (
