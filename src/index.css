@@ -3,10 +3,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{
-    background-color: #f2f2f2;
+/* index.css or App.css */
+
+/* index.css or App.css */
+
+body {
+    background-color: #ebedf2;
     font-family: 'Montserrat', sans-serif;
+    /* background-image: url('/public/2870384_15002.webp'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
+
 .rtf_Table{
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.973);
 }
@@ -14,7 +23,7 @@ body{
 .rdt_TableCol{
     font-size: 16px;
     font-weight: 500;
-    background: #405952;
+    background: #3453d1;
     color: #f6f6f6;
     
 }
@@ -30,4 +39,23 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 8px;
 }
+
+.submit_button{
+    background-color: rgb(0, 85, 255);
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.submit_button:hover{
+    background-color: rgb(2, 61, 179);
+    color: #ffffff;
+   
+    cursor: pointer;
+}
+
+
+  

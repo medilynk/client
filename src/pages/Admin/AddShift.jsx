@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import MySidebar from '../../components/MySidebar';
+import MySidebar from '../../components/AdminSidebar';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';

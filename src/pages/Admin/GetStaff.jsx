@@ -27,6 +27,7 @@ const GetStaff = () => {
         {
             name: 'Email',
             selector: (row) => row.email,
+            cell: (row) => <div className="whitespace-pre-wrap break-all">{row.email}</div>,
             sortable: false,
         },
         {

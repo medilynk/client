@@ -11,7 +11,6 @@ const AddDepartment = () => {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getAllDepartments();
-
             setAllDepartments(data);
         };
         fetchData();
@@ -19,8 +18,7 @@ const AddDepartment = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-
-       createDepartment(departmentName);
+        createDepartment(departmentName);
         setDepartmentName('');
         const updatedDepartments = await getAllDepartments();
         setAllDepartments(updatedDepartments);
@@ -29,7 +27,8 @@ const AddDepartment = () => {
     const handleDelete = (id) => async () => {
         console.log(id);
         deleteDepartment(id);
-    }
+        setAllDepartments(Alldepartments.filter((department) => department.id !== id));
+        }
 
     return (
         <div className='route'>

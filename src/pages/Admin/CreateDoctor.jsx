@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
-import useCreateStaff from '../../hooks/admin/accounts/useCreateStaff'
 import useGetShiftByName from '../../hooks/admin/shifts/useGetShiftByName';
 import AsyncSelect from 'react-select/async';
-
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import useGetDepartmentByName from '../../hooks/admin/department/useGetDepartmentByName';
+import useCreateDoctor from '../../hooks/admin/accounts/useCreateDoctor';
 const CreateDoctor = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -13,29 +14,54 @@ const CreateDoctor = () => {
   const [selectedShiftValues, setSelectedShiftValues] = useState([]); // Array of selected shift IDs
   const [shiftText, setShiftText] = useState(''); // Text entered for shift
   const {getShiftByName} = useGetShiftByName();
-  const [deptID, setDeptID] = useState(0);
+  const [selecteddeptID, setSelectedDeptID] = useState(null);
+  const [deptText, setDeptText] = useState(''); // Text entered for department
+  const {createDoctor, error, loading} = useCreateDoctor();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
+    const data = {
       first_name: firstName,
       last_name: lastName,
       email: email,
       phone: phone,
       password: password,
       shifts: selectedShiftValues, // Use selectedShiftValues array
-      deptID: deptID
-    });
+      dept_id: selecteddeptID.id
+    };
+    createDoctor(data);
+    if(!error && !loading){
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPhone('');
+    setPassword('');
+    setSelectedShiftValues([]);
+    setSelectedDeptID(null);
+    }
+
+
   };
 
-  // handle input change event
+  const {getDepartmentByName} = useGetDepartmentByName();
+
+  // handle shift input change event
   const handleInputChange = value => {
     setShiftText(value);
   };
 
-  // handle selection
+  // handle Shift selection
   const handleChange = values => {
     setSelectedShiftValues(values.map(value => value.id)); // Map selected values to array of IDs
+  }
+  // handle department input change event
+  const handleDeptinputChange = value => {
+    setDeptText(value);
+  };
+
+  // handle selection
+  const handleDeptChange = value => {
+    setSelectedDeptID(value);
   }
 
   // Function to handle text field change and fetch options
@@ -52,16 +78,22 @@ const CreateDoctor = () => {
         end_time: endTime
       };
     });
-  
     return formattedOptions;
   };
+
+  const fetchDept = async () => {
+    const dept = await getDepartmentByName();
+    return dept;
+  }
   
   
 
   return (
     <div className='route'>
-      <h2 className='text-3xl py-4 font-medium'>Create a new doctor</h2>
-      <form className='flex bg-zinc-100 flex-col justify-center gap-4 shadow-zinc-500 shadow-xl items-start p-4 w-1/3 ' onSubmit={handleSubmit}>
+      <h2 className='text-3xl py-8 font-medium'>Create a new doctor</h2>
+      <form className='flex bg-zinc-100 py-8 flex-col justify-center items-center gap-4 shadow-zinc-500 shadow-xl items-start p-4 w-1/3 ' onSubmit={handleSubmit}>
+      <div className='w-full text-3xl text-center'><LocalHospitalIcon style={{ fontSize: '5rem', color: '#c7303f' }}/></div>
+      <div className='flex gap-2'>
         <label className='w-full'>
           First Name
           <input
@@ -82,6 +114,7 @@ const CreateDoctor = () => {
             placeholder='Last Name'
           />
         </label>
+        </div>
         <label className='w-full'>
           Email
           <input
@@ -116,7 +149,29 @@ const CreateDoctor = () => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Submit</button>
+        <label className='w-full'>
+          Department
+          <AsyncSelect
+            isMulti={false}
+            cacheOptions
+            defaultOptions
+            getOptionLabel={e => e.name}
+            getOptionValue={e => e.id}
+            loadOptions={fetchDept}
+            onInputChange={handleDeptinputChange}
+            onChange={handleDeptChange}/>
+        </label>
+        <label className='w-full'>
+          Password
+          <input
+            className='border border-gray-500 focus:outline-none rounded-md w-full p-2 '
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder='Password'
+          />
+          </label>
+        <button disabled={loading} className='submit_button' type="submit">Submit</button>
       </form>
     </div>
   );
