@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import { Outlet } from 'react-router-dom';
-import MySidebar from './components/AdminSidebar';
+import AdminSidebar from './components/AdminSidebar';
 import { useAuthContext } from './hooks/useAuthContext';
 import StaffSidebar from './components/StaffSidebar';
 function Layout() {

@@ -10,7 +10,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 
-function MySidebar() {
+function AdminSidebar() {
   const { user } = useAuthContext();
   const [collapsed, setCollapsed] = React.useState(false);
   const { logout } = useLogout();
@@ -71,4 +71,4 @@ function MySidebar() {
   )
 }
 
-export default MySidebar;
+export default AdminSidebar;
