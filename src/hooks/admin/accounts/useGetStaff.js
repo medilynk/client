@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const useGetStaff = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -11,8 +11,7 @@ const useGetStaff = () => {
             setLoading(true);
             const cookies = new Cookies();
             const token = cookies.get('token');
-            const base_url = import.meta.env.VITE_BASE_URL;
-            const response = await fetch(`${base_url}/admin/all/staffs`, {
+            const response = await fetch(`${BASE_URL}/admin/all/staffs`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

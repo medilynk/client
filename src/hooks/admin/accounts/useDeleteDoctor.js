@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const useDeleteDoctor = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -20,8 +20,7 @@ const useDeleteDoctor = () => {
 
             const cookies = new Cookies();
             const token = cookies.get('token');
-            const base_url = import.meta.env.VITE_BASE_URL;
-            const response = await fetch(`${base_url}/admin/delete/doctor`, {
+            const response = await fetch(`${BASE_URL}/admin/delete/doctor`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

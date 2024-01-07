@@ -1,59 +1,57 @@
-import { useState, useEffect } from "react"
-import { useAuthContext } from "./useAuthContext"
-import Cookies from "universal-cookie"
-import { jwtDecode } from 'jwt-decode'
-import { useNavigate } from "react-router-dom"
-export const useLogin = () =>{
-    const nav = useNavigate()
-    const [error, setError] = useState(null)
-    
-    const [isLoading, setIsLoading] = useState(null)
-    const {dispatch} = useAuthContext()
+import { useState, useEffect } from "react";
+import { useAuthContext } from "./useAuthContext";
+import Cookies from "universal-cookie";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
-    const login = async(email, password, type)=>{
-        setIsLoading(true);
-        setError(null)
-        
-        const data={
-            'email' : email,
-            'password' : password,
-        }
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-        const base_url = import.meta.env.VITE_BASE_URL
-        const response = await fetch(`${base_url}/auth/login/${type}`,{
-            method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
-            body: JSON.stringify(data)
-        })
+export const useLogin = () => {
+  const nav = useNavigate();
+  const [error, setError] = useState(null);
 
-        const json = await response.json()
+  const [isLoading, setIsLoading] = useState(null);
+  const { dispatch } = useAuthContext();
 
-        if(!response.ok)
-        {
-            setIsLoading(false)
-            setError(json.message)
-            console.log(error);
-            console.log(json.message)
-        }
+  const login = async (email, password, type) => {
+    setIsLoading(true);
+    setError(null);
+    const data = {
+      email: email,
+      password: password,
+    };
+    const response = await fetch(`${BASE_URL}/auth/login/${type}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-        if(response.ok)
-        {
-            // Decode the JWT token
-            const decodedData = jwtDecode(json.token)
+    const json = await response.json();
 
-            // Save the decoded data to cookies
-            const cookies = new Cookies()
-            cookies.set('token', json.token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) }) //expires in 7 days
-            localStorage.setItem('user', JSON.stringify(decodedData))
-            //update AuthContext
-            dispatch({type:'LOGIN', payload: decodedData})
-            nav(`/${decodedData.type}`)
-            setIsLoading(false)
-            setError(null)
-            
-        }
+    if (!response.ok) {
+      setIsLoading(false);
+      setError(json.message);
+      console.log(error);
+      console.log(json.message);
     }
-   
 
-    return {login, error, isLoading }
-}
+    if (response.ok) {
+      // Decode the JWT token
+      const decodedData = jwtDecode(json.token);
+
+      // Save the decoded data to cookies
+      const cookies = new Cookies();
+      cookies.set("token", json.token, {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      }); //expires in 7 days
+      localStorage.setItem("user", JSON.stringify(decodedData));
+      //update AuthContext
+      dispatch({ type: "LOGIN", payload: decodedData });
+      nav(`/${decodedData.type}`);
+      setIsLoading(false);
+      setError(null);
+    }
+  };
+
+  return { login, error, isLoading };
+};

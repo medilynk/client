@@ -1,13 +1,16 @@
 ---
 services:
-  client:
-    build: .
-    environment:
-      - VITE_BASE_URL='http://server:4000'
 
+  client:
+    container_name: medilynk-client
+    build: .
+    env_file:
+      - .env.production
     ports:
-      - "8000:80"
+      - "8000:3000"
+    
   postgres-db:
+    container_name: medilynk-db
     image: postgres:alpine
     restart: unless-stopped
     command: -p 5433
@@ -19,6 +22,7 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
 
   server:
+    container_name: medilynk-server
     image: dgclasher/medilynk-server:latest
     pull_policy: always
     restart: unless-stopped
