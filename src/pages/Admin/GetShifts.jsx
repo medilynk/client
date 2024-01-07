@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useEffect, useState, useMemo } from 'react';
 import useGetShift from '../../hooks/admin/shifts/useGetShift';
-import MySidebar from '../../components/AdminSidebar';
 import DataTable from 'react-data-table-component';
 import useDeleteShift from '../../hooks/admin/shifts/useDeleteShift';
 import { toast } from 'react-hot-toast';
@@ -8,7 +8,15 @@ const GetShifts = () => {
     const [shifts, setShifts] = useState([]);
     const { loading, error, getShifts } = useGetShift();
     const { deleteShift, errorDelete } = useDeleteShift();
-    
+
+    const cachedShifts = useMemo(() => {
+        return shifts.map((shift) => ({
+            ...shift,
+            start_time: shift.start_time.slice(11, 19),
+            end_time: shift.end_time.slice(11, 19),
+        }));
+    }, [shifts]);
+
     const columns = [
         {
             name: 'id',
@@ -49,24 +57,18 @@ const GetShifts = () => {
     useEffect(() => {
         const fetchData = async () => {
             const data = await getShifts();
-
-            setShifts(
-                data.data.map((shift) => ({
-                    ...shift,
-                    start_time: shift.start_time.slice(11, 19),
-                    end_time: shift.end_time.slice(11, 19),
-                }))
-            );
+            setShifts(data.data);
         };
+
         fetchData();
-    }, [shifts]);
+    }, []);
 
     return (
         <div className="route">
             
             <div className="w-[60%] flex flex-col  h-full  justify-center ">
             <h2 className='text-center  text-3xl font-medium py-4'>Get all shifts</h2>
-               {shifts.length>0 && <DataTable  className='shadow-xl ' columns={columns} data={shifts}  />}
+               {shifts.length>0 && <DataTable  className='shadow-xl ' columns={columns} data={cachedShifts}  />}
             </div>
         </div>
     );

@@ -1,11 +1,11 @@
-
 import { useState } from 'react';
-import Cookies from 'universal-cookie';
 import { useAuth } from '../../../context/TokenContext.jsx';
+
 const useCreatePatient = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { getToken } = useAuth();
+
     const addPatient = async (data) => {
         try {
             setLoading(true);
@@ -22,15 +22,18 @@ const useCreatePatient = () => {
             });
 
             if (response.ok) {
+                const data = await response.json();
                 console.log('Patient added successfully');
+                console.log(data);
+                setError(null);
             } else {
                 const errorResponse = await response.json();
-                console.log('Patient not added:', errorResponse.error);
-                setError(errorResponse.error);
+                console.log('Patient not added:', errorResponse.message);
+                setError(errorResponse.message);
             }
         } catch (error) {
             console.log('Error:', error.message);
-            setError(error.message);
+            setError('An error occurred');
         } finally {
             setLoading(false);
         }
