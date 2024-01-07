@@ -39,14 +39,10 @@ function StaffSidebar() {
                         >
                             <h2 className='text-2xl font-bold'> Medilynk</h2>
                         </MenuItem>
-                        <SubMenu
-                            style={{ backgroundColor: lightBlue }}
-                            label=" Manage Patient"
-                            icon={<AccessTimeIcon />}
-                        >
-                            <MenuItem style={{ backgroundColor: light }} component={<Link to='/staff/create-patient' />}> Add Patient</MenuItem>
-                            <MenuItem style={{ backgroundColor: light }} component={<Link to='/staff/get-patients' />}> All Patients</MenuItem>
-                        </SubMenu>
+                       
+                        <MenuItem 
+                        icon={<ManIcon />}
+                        style={{ backgroundColor: lightBlue }} component={<Link to='/staff/create-patient' />}> Add Patient</MenuItem>
                         <SubMenu
                             style={{ backgroundColor: lightBlue }}
                             label="Manage Appointment"

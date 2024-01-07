@@ -1,0 +1,30 @@
+---
+services:
+  client:
+    build: .
+    environment:
+      - VITE_BASE_URL='http://server:4000'
+
+    ports:
+      - "8000:80"
+  postgres-db:
+    image: postgres:alpine
+    restart: unless-stopped
+    command: -p 5433
+    expose:
+      - 5433
+    env_file:
+      - .env
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  server:
+    image: dgclasher/medilynk-server:latest
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      - postgres-db
+    env_file:
+      - .env
+    expose:
+      - 4000
