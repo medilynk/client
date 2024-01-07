@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const useDeleteDepartment = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,8 +13,7 @@ const useDeleteDepartment = () => {
         try {
             const cookies = new Cookies();
             const token = cookies.get('token');
-            const base_url = import.meta.env.VITE_BASE_URL;
-            const response = await fetch(`${base_url}/admin/delete/dept/${departmentId}`, {
+            const response = await fetch(`${BASE_URL}/admin/delete/dept/${departmentId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`

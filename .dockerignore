@@ -1,2 +1,5 @@
-.env
+.git
+.env*
+data
+.gitignore
 node_modules

@@ -1,6 +1,9 @@
 
 import { useState } from 'react';
 import Cookies from 'universal-cookie';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const useCreatePrescription = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -9,9 +12,7 @@ const useCreatePrescription = () => {
     const addPrescription = async (data) => {
         try {
             setLoading(true);
-            const base_url = import.meta.env.VITE_BASE_URL;
-            console.log(data);
-            const response = await fetch(`${base_url}/doctor/prescription`, {
+            const response = await fetch(`${BASE_URL}/doctor/prescription`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,43 +1,41 @@
-
-import { useState } from 'react';
-import { useAuth } from '../../../context/TokenContext.jsx';
+import { useState } from "react";
+import { useAuth } from "../../../context/TokenContext.jsx";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const useGetDoctorByName = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [doctors, setDoctors] = useState([]);
-    const { getToken } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [doctors, setDoctors] = useState([]);
+  const { getToken } = useAuth();
 
-    const getDoctorByName = async (data) => {
-        setIsLoading(true);
-        setError(null);
-        try {
-            const token = getToken();
-            const base_url = import.meta.env.VITE_BASE_URL;
-            const response = await fetch(`${base_url}/staff/doctor/get`, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+  const getDoctorByName = async (data) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const token = getToken();
+      const response = await fetch(`${BASE_URL}/staff/doctor/get`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-            if (!response.ok) {
-                throw new Error('Failed to get doctor by name');
-            }
+      if (!response.ok) {
+        throw new Error("Failed to get doctor by name");
+      }
 
-            const data = await response.json();
-            console.log(data);
-            const array = data.data;
-            console.log(array);
-            return array;
+      const data = await response.json();
+      console.log(data);
+      const array = data.data;
+      console.log(array);
+      return array;
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    return { getDoctorByName, isLoading, error, doctors };
+  return { getDoctorByName, isLoading, error, doctors };
 };
 
 export default useGetDoctorByName;
