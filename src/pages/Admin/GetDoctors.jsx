@@ -12,6 +12,11 @@ const GetDoctors = () => {
 
     const columns = [
         {
+            name: 'ID',
+            selector: (row) => row.id,
+            sortable: false,
+        },
+        {
             name: 'Name',
             selector: (row) => row.first_name + ' ' + row.last_name,
             sortable: false,

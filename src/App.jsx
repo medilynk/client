@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import Layout from './Layout';
 import Landing from './pages/Landing';
 import Admin from './pages/Admin/Admin';
-import Doctor from './pages/Doctor';
+import Doctor from './pages/Doctor/Doctor';
 import Staff from './pages/Staff/Staff';
 import AddShift from './pages/Admin/AddShift';
 import GetShifts from './pages/Admin/GetShifts';
@@ -15,9 +15,10 @@ import CreateDoctor from './pages/Admin/CreateDoctor';
 import GetDoctors from './pages/Admin/GetDoctors';
 import SigninPage from './pages/SigninPage';
 import CreatePatient from './pages/Staff/CreatePatient';
-import GetPatients from './pages/Staff/GetPatients';
 import CreateAppointment from './pages/Staff/CreateAppointment';
 import GetAppointments from './pages/Staff/GetAppoinments'
+import CreatePrescription from './pages/Doctor/CreatePrescription';
+import GetDoctorAppointments from './pages/Doctor/GetDoctorAppointments';
 function App() {
   const { user } = useAuthContext();
 
@@ -45,9 +46,10 @@ function App() {
         <Route path='/admin/create-doctor' element={user && user.type==='admin'? <><Layout/><CreateDoctor/></> : <div> Not Found or You do not have permission.</div>}/>
         <Route path='/admin/get-doctor' element={user && user.type==='admin'? <><Layout/><GetDoctors/></> : <div> Not Found or You do not have permission.</div>}/>
         <Route path='/staff/create-patient' element={user && user.type==='staff'? <><Layout/><CreatePatient/></> : <div> Not Found or You do not have permission.</div>}/>
-        <Route path='/staff/get-patients' element={user && user.type==='staff'? <><Layout/><GetPatients/></> : <div> Not Found or You do not have permission.</div>}/>
         <Route path='/staff/create-appointment' element={user && user.type==='staff'? <><Layout/><CreateAppointment/></> : <div> Not Found or You do not have permission.</div>}/>
         <Route path='/staff/get-appointments' element={user && user.type==='staff'? <><Layout/><GetAppointments/></> : <div> Not Found or You do not have permission.</div>}/>
+        <Route path='/doctor/create-prescription' element={user && user.type==='doctor'? <><Layout/><CreatePrescription/></> : <div> Not Found or You do not have permission.</div>}/>
+        <Route path='/doctor/get-appointments' element={user && user.type==='doctor'? <><Layout/><GetDoctorAppointments/></> : <div> Not Found or You do not have permission.</div>}/>
         <Route path="*" element={<div> Not Found or You do not have permission.</div>}/>
 
       </Routes>
